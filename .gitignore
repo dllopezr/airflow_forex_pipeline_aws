@@ -1,3 +1,2 @@
 #terraform config files
 .terraform
-.terraform.lock.hcl
