@@ -13,7 +13,7 @@ default_args = {
 
 with DAG(
     dag_id="forex_data_pipeline",
-    start_date=datetime.datetime(2023, 1, 1),
+    start_date=datetime(2023, 1, 1),
     schedule="@daily",
     catchup=False,
     default_args=default_args
