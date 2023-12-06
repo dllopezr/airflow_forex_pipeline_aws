@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.http.sensors.http import HttpSensor
+from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
 
 default_args = {
     "owner": "airflow",
@@ -24,6 +25,15 @@ with DAG(
         http_conn_id="forex_api",
         endpoint="marclamberti/f45f872dea4dfd3eaa015a4a1af4b39b",
         response_check=lambda response: "rates" in response.text,
+        poke_interval=5,
+        timeout=20
+    )
+
+    is_forex_currencies_file_available = S3KeySensor(
+        task_id = "is_forex_currencies_file_available",
+        bucket_key = "forex_currencies.csv",
+        bucket_name = "airflow-forex-pipeline-david-lopez",
+        aws_conn_id = "aws_default",
         poke_interval=5,
         timeout=20
     )
