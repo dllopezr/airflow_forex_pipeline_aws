@@ -21,3 +21,7 @@ provider "aws" {
 module "compute" {
   source             = "./modules/compute"
 }
+
+module "iam" {
+  source             = "./modules/iam"
+}
