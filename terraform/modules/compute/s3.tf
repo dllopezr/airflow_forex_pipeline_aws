@@ -11,3 +11,10 @@ resource "aws_s3_bucket" "airflow_forex_pipeline" {
         Name = "airflow-forex-pipeline-david-lopez"
     }
 }
+
+resource "aws_s3_bucket" "forex_rates_data" {
+    bucket = "forex-rates-data-david-lopez"
+    tags = {
+        Name = "forex-rates-data-david-lopez"
+    }
+}
