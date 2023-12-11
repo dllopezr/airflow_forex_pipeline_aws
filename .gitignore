@@ -1,7 +1,7 @@
 #terraform config files
 .terraform
 terraform.tfstate*
-terraform.lock*
+.terraform.lock*
 
 # Editors
 .vscode/
