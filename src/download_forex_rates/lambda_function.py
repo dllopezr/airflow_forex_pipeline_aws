@@ -43,6 +43,3 @@ def lambda_handler(event, context):
         for pair in with_pairs:
             outdata['rates'][pair] = indata['rates'][pair]
         upload_data(outdata, s3)
-
-
-
