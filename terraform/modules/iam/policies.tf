@@ -78,5 +78,25 @@ resource "aws_iam_policy" "put_forex_rates_data" {
             ]
         }
     ]
-})
+  })
+}
+
+resource "aws_iam_policy" "create_logs" {
+  name        = "create_logs"
+  description = "Grant permissions to create and write logs in Cloudwatch"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "*"
+        }
+    ]
+  })
 }
