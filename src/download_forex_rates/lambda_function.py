@@ -2,6 +2,7 @@ import boto3
 import csv
 from io import StringIO
 import json
+import os
 import requests
 
 
@@ -28,7 +29,7 @@ def lambda_handler(event, context):
     }
 
     # Read currencies file from S3
-    currencies_bucket = "airflow-forex-pipeline-david-lopez" #TODO: Change for an env variable inside the lambda function
+    currencies_bucket = os.environ.get("currencies_bucket")
     file_key = "forex_currencies.csv"
     forex_currencies = s3.get_object(Bucket=currencies_bucket, Key=file_key)
     forex_currencies = forex_currencies['Body'].read().decode('utf-8')

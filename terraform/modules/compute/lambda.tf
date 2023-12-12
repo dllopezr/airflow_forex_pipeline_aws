@@ -8,5 +8,10 @@ resource "aws_lambda_function" "download_forex_rates" {
   runtime     = "python3.10"
   timeout     = 60
   memory_size = 256
+  environment {
+    variables = {
+      currencies_bucket = "airflow-forex-pipeline-david-lopez"
+    }
+  }
 
 }
