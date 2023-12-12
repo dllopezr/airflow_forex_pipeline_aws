@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.http.sensors.http import HttpSensor
 from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
+from airflow.providers.amazon.aws.operators.aws_lambda import AwsLambdaInvokeFunctionOperator
 
 default_args = {
     "owner": "airflow",
@@ -36,4 +37,9 @@ with DAG(
         aws_conn_id = "aws_default",
         poke_interval=5,
         timeout=20
+    )
+
+    downloading_rates = AwsLambdaInvokeFunctionOperator(
+        task_id = "downloading_rates",
+        function_name = "download_forex_rates",
     )
