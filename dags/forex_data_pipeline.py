@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.http.sensors.http import HttpSensor
 from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
-from airflow.providers.amazon.aws.operators.aws_lambda import LambdaInvokeFunctionOperator
+from airflow.providers.amazon.aws.operators.lambda_function import LambdaInvokeFunctionOperator
 
 default_args = {
     "owner": "airflow",
