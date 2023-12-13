@@ -44,3 +44,5 @@ with DAG(
         function_name = "download_forex_rates",
         aws_conn_id="aws_default"
     )
+
+    is_forex_rates_available >> is_forex_currencies_file_available >> downloading_rates
