@@ -100,3 +100,21 @@ resource "aws_iam_policy" "create_logs" {
     ]
   })
 }
+
+resource "aws_iam_policy" "lambda_invoke_download_forex_rates" {
+  name        = "lambda_invoke_download_forex_rates"
+  description = "Permission to invoke download_forex_rates lambda function "
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": "arn:aws:lambda:us-east-2:921082494404:function:download_forex_rates"
+        }
+    ]
+  })
+}
