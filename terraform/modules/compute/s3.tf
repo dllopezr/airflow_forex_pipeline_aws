@@ -18,3 +18,10 @@ resource "aws_s3_bucket" "forex_rates_data" {
         Name = "forex-rates-data-david-lopez"
     }
 }
+
+resource "aws_s3_bucket" "transformed_forex_rates" {
+    bucket = "transformed-forex-rates-david-lopez"
+    tags = {
+        Name = "transformed-forex-rates-david-lopez"
+    }
+}
