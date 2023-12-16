@@ -22,3 +22,17 @@ resource "aws_iam_role" "lambda_download_forex_rates" {
     "arn:aws:iam::921082494404:policy/create_logs"
     ]
 }
+
+## Glue service role
+resource "aws_iam_role" "glue_service_role" {
+  name = "glue_service_role"
+  assume_role_policy = data.aws_iam_policy_document.glue_assume_role_policy.json
+}
+resource "aws_iam_role_policy_attachment" "glue_service_role_glue_service_role_policy_attachment" {
+  policy_arn = data.aws_iam_policy.glue_service_role.arn
+  role       = aws_iam_role.glue_service_role.name
+}
+resource "aws_iam_role_policy_attachment" "glue_service_role_s3_full_access_policy_attachment" {
+  policy_arn = data.aws_iam_policy.s3_full_access.arn
+  role       = aws_iam_role.glue_service_role.name
+}

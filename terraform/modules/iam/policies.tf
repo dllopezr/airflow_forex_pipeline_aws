@@ -1,3 +1,5 @@
+## assume role policies
+
 data "aws_iam_policy_document" "ec2_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -19,6 +21,19 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
     }
   }
 }
+
+data "aws_iam_policy_document" "glue_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect = "Allow"
+    principals {
+      type = "Service"
+      identifiers = ["glue.amazonaws.com"]
+    }
+  }
+}
+
+## managed policies
 
 resource "aws_iam_policy" "airflow_host_ec2_s3_access" {
   name        = "airflow_host_ec2_s3_access"
@@ -117,4 +132,15 @@ resource "aws_iam_policy" "lambda_invoke_download_forex_rates" {
         }
     ]
   })
+}
+
+
+## aws policies
+
+data "aws_iam_policy" "glue_service_role" {
+  arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+}
+
+data "aws_iam_policy" "s3_full_access" {
+  arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
