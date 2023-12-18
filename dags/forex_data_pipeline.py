@@ -3,6 +3,7 @@ from airflow import DAG
 from airflow.providers.http.sensors.http import HttpSensor
 from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
 from airflow.providers.amazon.aws.operators.lambda_function import LambdaInvokeFunctionOperator
+from airflow.providers.amazon.aws.operators.glue import GlueJobOperator
 
 default_args = {
     "owner": "airflow",
@@ -45,4 +46,9 @@ with DAG(
         aws_conn_id="aws_default"
     )
 
-    is_forex_rates_available >> is_forex_currencies_file_available >> downloading_rates
+    transform_forex_rates = GlueJobOperator(
+        task_id = "transform_forex_rate",
+        job_name = "transform_forex_rates"
+    )
+
+    is_forex_rates_available >> is_forex_currencies_file_available >> downloading_rates >> transform_forex_rates
