@@ -8,7 +8,8 @@ resource "aws_iam_role" "airflow_ec2_host_role" {
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role_policy.json
   managed_policy_arns = [
     "arn:aws:iam::921082494404:policy/airflow_host_ec2_s3_access",
-    "arn:aws:iam::921082494404:policy/lambda_invoke_download_forex_rates"
+    "arn:aws:iam::921082494404:policy/lambda_invoke_download_forex_rates",
+    aws_iam_policy.glue_run_transform_forex_rates.arn
     ]
 }
 

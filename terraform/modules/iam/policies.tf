@@ -134,6 +134,26 @@ resource "aws_iam_policy" "lambda_invoke_download_forex_rates" {
   })
 }
 
+resource "aws_iam_policy" "glue_run_transform_forex_rates" {
+  name = "glue_transform_forex_rates"
+  description = "Grants permission to run the glue job transform_forex_rates"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "glue:StartJobRun"
+        ],
+        "Resource": "arn:aws:glue:us-east-2:921082494404:job/transform_forex_rates"
+      }
+    ]
+  }
+
+  )
+  
+}
 
 ## aws policies
 
