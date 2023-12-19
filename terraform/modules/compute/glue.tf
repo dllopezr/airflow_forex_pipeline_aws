@@ -10,3 +10,7 @@ resource "aws_glue_job" "transform_forex_rates" {
     glue_version = "4.0"
     timeout = 60
 }
+
+resource "aws_glue_catalog_database" "airflow_forex_rates_pipeline" {
+  name = "airflow_forex_rates_pipeline"
+}

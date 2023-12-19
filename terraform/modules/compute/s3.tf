@@ -25,3 +25,10 @@ resource "aws_s3_bucket" "transformed_forex_rates" {
         Name = "transformed-forex-rates-david-lopez"
     }
 }
+
+resource "aws_s3_bucket" "athena_query_outputs" {
+    bucket = "athena-query-outputs-david-lopez"
+    tags = {
+        Name = "athena-query-outputs-david-lopez"
+    }
+}
