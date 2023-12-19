@@ -5,6 +5,7 @@ from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
 from airflow.providers.amazon.aws.operators.lambda_function import LambdaInvokeFunctionOperator
 from airflow.providers.amazon.aws.operators.glue import GlueJobOperator
 from airflow.providers.amazon.aws.operators.sns import SnsPublishOperator
+from airflow.providers.amazon.aws.notifications.sns import SnsNotifier
 
 default_args = {
     "owner": "airflow",
@@ -15,12 +16,20 @@ default_args = {
     "retry_delay": timedelta(minutes=5)
 }
 
+dag_failure_sns_notification = SnsNotifier(
+    aws_conn_id = "aws_default",
+    message = "The DAG {{ dag.dag_id }} failed",
+    subject = "Airlfow Pipeline Failed", 
+    target_arn = "arn:aws:sns:us-east-2:921082494404:airflow_forex_pipeline",
+)
+
 with DAG(
     dag_id="forex_data_pipeline",
     start_date=datetime(2023, 1, 1),
     schedule="@daily",
     catchup=False,
-    default_args=default_args
+    default_args=default_args,
+    on_failure_callback=[dag_failure_sns_notification]
 ):
     
     is_forex_rates_available = HttpSensor(
