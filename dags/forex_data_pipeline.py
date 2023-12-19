@@ -56,7 +56,7 @@ with DAG(
         task_id = "succesfull_execution_sns",
         aws_conn_id = "aws_default",
         target_arn = "arn:aws:sns:us-east-2:921082494404:airflow_forex_pipeline",
-        message = "Airflow Forex Data Pipeline has been succesfully executed",
+        message = f"Airflow Forex Data Pipeline has been succesfully executed at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
         subject = "Airflow Forex Data Pipeline"
     )
 
