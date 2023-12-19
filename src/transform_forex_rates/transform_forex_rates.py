@@ -49,6 +49,6 @@ for file in files:
     df = order_columns(df)
 
     # Save to s3
-    df.write.csv(f"s3a://{output_bucket_name}/{base_currency}", header=True, mode="overwrite")
+    df.write.csv(f"s3a://{output_bucket_name}/currency={base_currency}", header=True, mode="overwrite")
 
 job.commit()
