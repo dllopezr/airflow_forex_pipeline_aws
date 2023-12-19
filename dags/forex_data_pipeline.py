@@ -4,6 +4,7 @@ from airflow.providers.http.sensors.http import HttpSensor
 from airflow.providers.amazon.aws.sensors.s3 import S3KeySensor
 from airflow.providers.amazon.aws.operators.lambda_function import LambdaInvokeFunctionOperator
 from airflow.providers.amazon.aws.operators.glue import GlueJobOperator
+from airflow.providers.amazon.aws.operators.sns import SnsPublishOperator
 
 default_args = {
     "owner": "airflow",
@@ -51,4 +52,13 @@ with DAG(
         job_name = "transform_forex_rates"
     )
 
-    is_forex_rates_available >> is_forex_currencies_file_available >> downloading_rates >> transform_forex_rates
+    succesfull_execution_sns = SnsPublishOperator(
+        task_id = "succesfull_execution_sns",
+        aws_conn_id = "aws_default",
+        target_arn = "arn:aws:sns:us-east-2:921082494404:airflow_forex_pipeline",
+        message = "Airflow Forex Data Pipeline has been succesfully executed"
+        subject = "Airflow Forex Data Pipeline"
+    )
+
+
+    is_forex_rates_available >> is_forex_currencies_file_available >> downloading_rates >> transform_forex_rates >> succesfull_execution_sns
